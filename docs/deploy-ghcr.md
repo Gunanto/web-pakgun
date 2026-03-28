@@ -1,6 +1,12 @@
 # Deploy dari GHCR
 
-Panduan ini untuk menjalankan aplikasi dari image GHCR:
+Panduan ini disesuaikan untuk direktori VPS Anda:
+
+```text
+~/apps/web-pakgun
+```
+
+Image yang dipakai:
 
 ```text
 ghcr.io/gunanto/web-pakgun:latest
@@ -26,21 +32,22 @@ Jika sukses, package image biasanya terlihat di:
 https://github.com/Gunanto/web-pakgun/pkgs/container/web-pakgun
 ```
 
-## 2. Siapkan server
+## 2. Siapkan direktori deploy di VPS
 
-Pastikan VPS sudah memiliki:
-
-- Docker Engine
-- Docker Compose plugin
-
-Buat direktori deploy, misalnya:
+Masuk ke direktori deploy yang sudah Anda buat:
 
 ```bash
-mkdir -p /opt/web-pakgun/data
-cd /opt/web-pakgun
+cd ~/apps/web-pakgun
+mkdir -p data
 ```
 
-Salin file berikut dari repo:
+Jika direktori ini masih kosong, ambil isi repo:
+
+```bash
+git clone https://github.com/Gunanto/web-pakgun.git .
+```
+
+Jika direktori sudah berisi file, jangan clone dengan titik (`.`). Cukup pastikan file ini tersedia:
 
 - `docker-compose.prod.yml`
 
@@ -49,7 +56,7 @@ Salin file berikut dari repo:
 Buat file:
 
 ```text
-/opt/web-pakgun/data/.env
+~/apps/web-pakgun/data/.env
 ```
 
 Contoh isi minimal:
@@ -68,6 +75,11 @@ GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
 ```
 
+Catatan:
+
+- `OAUTH_BASE_URL` harus memakai domain publik produksi Anda jika nanti login Google/GitHub diaktifkan.
+- `SESSION_SECRET` sebaiknya acak panjang, minimal 32 karakter.
+
 ## 4. Login ke GHCR jika package masih private
 
 Jika package GHCR masih private:
@@ -76,13 +88,13 @@ Jika package GHCR masih private:
 echo 'PASTE_GITHUB_PAT' | docker login ghcr.io -u Gunanto --password-stdin
 ```
 
-PAT minimal perlu akses package read.
+PAT minimal perlu izin read package.
 
 Jika package sudah public, langkah login ini tidak perlu.
 
 ## 5. Jalankan container
 
-Di server, dari direktori deploy:
+Dari direktori deploy:
 
 ```bash
 docker compose -f docker-compose.prod.yml pull
@@ -91,17 +103,23 @@ docker compose -f docker-compose.prod.yml up -d
 
 ## 6. Verifikasi
 
-Periksa status:
+Periksa status container:
 
 ```bash
 docker compose -f docker-compose.prod.yml ps
 docker compose -f docker-compose.prod.yml logs -f
 ```
 
-Tes HTTP lokal server:
+Tes HTTP lokal di VPS:
 
 ```bash
 curl -I http://127.0.0.1:3010/
+```
+
+Jika Anda memakai reverse proxy seperti Nginx, arahkan proxy ke:
+
+```text
+127.0.0.1:3010
 ```
 
 ## 7. Update rilis berikutnya
@@ -109,6 +127,7 @@ curl -I http://127.0.0.1:3010/
 Setelah ada push baru ke `main` dan workflow sukses:
 
 ```bash
+cd ~/apps/web-pakgun
 docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d
 ```
