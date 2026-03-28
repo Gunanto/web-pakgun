@@ -914,18 +914,94 @@ textarea {
 
 .editor {
     min-height: 240px;
-    background: #fff;
+    background: var(--panel);
+    color: var(--text);
 }
 
 .ql-toolbar.ql-snow {
     border: none;
     border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
 }
 
 .ql-container.ql-snow {
     border: none;
     font-family: "Space Grotesk", "Segoe UI", sans-serif;
     font-size: 15px;
+    color: var(--text);
+    background: var(--panel);
+}
+
+.ql-snow .ql-picker {
+    color: var(--text);
+}
+
+.ql-snow .ql-stroke {
+    stroke: var(--text);
+}
+
+.ql-snow .ql-fill {
+    fill: var(--text);
+}
+
+.ql-snow .ql-picker-label,
+.ql-snow .ql-picker-options,
+.ql-snow .ql-picker-item {
+    color: var(--text);
+}
+
+.ql-snow .ql-picker-options {
+    background: var(--panel);
+    border: 1px solid var(--border);
+}
+
+.ql-snow .ql-tooltip {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.ql-snow .ql-tooltip input[type="text"] {
+    background: color-mix(in srgb, var(--panel) 88%, var(--bg-accent) 12%);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.ql-editor.ql-blank::before {
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+.ql-editor pre.ql-syntax {
+    background: color-mix(in srgb, var(--bg-accent) 78%, black 22%);
+    color: var(--text);
+}
+
+[data-theme="dark"] .ql-snow .ql-picker-label:hover,
+[data-theme="dark"] .ql-snow .ql-picker-item:hover,
+[data-theme="dark"] .ql-snow button:hover,
+[data-theme="dark"] .ql-snow button:focus,
+[data-theme="dark"] .ql-snow button.ql-active,
+[data-theme="dark"] .ql-snow .ql-picker-label.ql-active,
+[data-theme="dark"] .ql-snow .ql-picker-item.ql-selected {
+    color: var(--primary);
+}
+
+[data-theme="dark"] .ql-snow button:hover .ql-stroke,
+[data-theme="dark"] .ql-snow button:focus .ql-stroke,
+[data-theme="dark"] .ql-snow button.ql-active .ql-stroke,
+[data-theme="dark"] .ql-snow .ql-picker-label:hover .ql-stroke,
+[data-theme="dark"] .ql-snow .ql-picker-label.ql-active .ql-stroke {
+    stroke: var(--primary);
+}
+
+[data-theme="dark"] .ql-snow button:hover .ql-fill,
+[data-theme="dark"] .ql-snow button:focus .ql-fill,
+[data-theme="dark"] .ql-snow button.ql-active .ql-fill,
+[data-theme="dark"] .ql-snow .ql-picker-item.ql-selected .ql-fill,
+[data-theme="dark"] .ql-snow .ql-picker-label.ql-active .ql-fill {
+    fill: var(--primary);
 }
 
 .media-grid {

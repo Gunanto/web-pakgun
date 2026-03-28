@@ -85,7 +85,11 @@ app.use(
           "https://fonts.googleapis.com",
           "https://cdn.jsdelivr.net",
         ],
-        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "font-src": [
+          "'self'",
+          "https://fonts.gstatic.com",
+          "https://cdn.jsdelivr.net",
+        ],
         "script-src": ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
         "connect-src": ["'self'"],
       },
@@ -245,7 +249,7 @@ function sanitizeContent(content = "") {
     allowedAttributes: {
       a: ["href", "target", "rel"],
       img: ["src", "alt", "title"],
-      span: ["class"],
+      span: ["class", "data-value"],
       p: ["class"],
       h1: ["class"],
       h2: ["class"],
