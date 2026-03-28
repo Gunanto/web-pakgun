@@ -1,0 +1,44 @@
+<%- include('../../partials/header') %>
+
+<section class="page-head">
+  <h1>Audit Log</h1>
+  <p class="muted">Menampilkan 200 aktivitas terbaru.</p>
+</section>
+
+<section class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Waktu</th>
+        <th>User</th>
+        <th>Aksi</th>
+        <th>Entity</th>
+        <th>Meta</th>
+        <th>IP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (!logs.length) { %>
+        <tr>
+          <td colspan="6">Belum ada aktivitas.</td>
+        </tr>
+      <% } else { %>
+        <% logs.forEach((log) => { %>
+          <tr>
+            <td><%= new Date(log.created_at).toLocaleString('id-ID') %></td>
+            <td>
+              <strong><%= log.user_name || 'System' %></strong><br />
+              <small><%= log.user_email || '-' %></small>
+            </td>
+            <td><span class="badge"><%= log.action %></span></td>
+            <td><%= log.entity %> <%= log.entity_id ? `#${log.entity_id}` : '' %></td>
+            <td><code><%= log.meta || '-' %></code></td>
+            <td><%= log.ip || '-' %></td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('../../partials/footer') %>

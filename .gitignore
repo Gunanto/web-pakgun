@@ -1,0 +1,8 @@
+node_modules/
+.env
+data/app.db
+data/app.db-shm
+data/app.db-wal
+data/sessions.db
+data/.env
+data/uploads/

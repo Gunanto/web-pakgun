@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<section class="dashboard-head">
+  <h1>Dashboard Admin</h1>
+  <p>Halo, <strong><%= currentUser.name %></strong> (<%= currentUser.role %>).</p>
+</section>
+
+<section class="grid stats-grid">
+  <article class="card stat-card">
+    <h3>Total User</h3>
+    <p class="stat"><%= stats.totalUsers %></p>
+  </article>
+  <article class="card stat-card">
+    <h3>Total Halaman</h3>
+    <p class="stat"><%= stats.totalPages %></p>
+  </article>
+  <article class="card stat-card">
+    <h3>Published</h3>
+    <p class="stat"><%= stats.totalPublished %></p>
+  </article>
+  <article class="card stat-card">
+    <h3>Draft</h3>
+    <p class="stat"><%= stats.totalDraft %></p>
+  </article>
+</section>
+
+<section class="admin-links">
+  <a class="button" href="/admin/pages">Kelola Halaman</a>
+  <a class="button secondary" href="/admin/media">Media</a>
+  <% if (currentUser.role === 'admin') { %>
+    <a class="button secondary" href="/admin/users">Kelola User</a>
+    <a class="button secondary" href="/admin/audit">Audit Log</a>
+    <a class="button secondary" href="/admin/settings">Pengaturan</a>
+  <% } %>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,54 @@
+<%- include('../../partials/header') %>
+
+<section class="page-head">
+  <h1>Kelola Halaman</h1>
+  <a href="/admin/pages/new" class="button">+ Buat Halaman</a>
+</section>
+
+<% if (!pages.length) { %>
+  <p>Belum ada halaman. Buat halaman baru sekarang.</p>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Judul</th>
+          <th>Slug</th>
+          <th>Status</th>
+          <th>Author</th>
+          <th>Update</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% pages.forEach((page) => { %>
+          <tr>
+            <td><%= page.title %></td>
+            <td><code><%= page.slug %></code></td>
+            <td>
+              <span class="badge <%= page.status === 'published' ? 'success' : 'warning' %>">
+                <%= page.status %>
+              </span>
+            </td>
+            <td><%= page.author_name %></td>
+            <td><%= new Date(page.updated_at).toLocaleString('id-ID') %></td>
+            <td class="actions">
+              <% if (page.status === 'published') { %>
+                <a class="button secondary tiny" href="/p/<%= page.slug %>" target="_blank">Lihat</a>
+              <% } else { %>
+                <a class="button secondary tiny" href="/admin/pages/<%= page.id %>/preview" target="_blank">Preview</a>
+              <% } %>
+              <a class="button secondary tiny" href="/admin/pages/<%= page.id %>/edit">Edit</a>
+              <form action="/admin/pages/<%= page.id %>/delete" method="POST" onsubmit="return confirm('Hapus halaman ini?')">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button type="submit" class="button danger tiny">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../../partials/footer') %>

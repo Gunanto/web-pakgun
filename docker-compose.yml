@@ -1,0 +1,15 @@
+services:
+  pakgun-web:
+    build: .
+    container_name: pakgun-web
+    ports:
+      - "3010:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ENV_PATH: /app/data/.env
+      SESSION_COOKIE_SECURE: "false"
+      OAUTH_BASE_URL: http://localhost:3010
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

@@ -1,0 +1,116 @@
+<%- include('../partials/header') %>
+
+<article class="page-content">
+  <% if (isPreview) { %>
+    <div class="preview-banner">Preview Draft - hanya terlihat oleh admin</div>
+  <% } %>
+  <h1><%= page.title %></h1>
+  <p class="meta">Oleh <%= page.author_name %> • <%= new Date(page.updated_at).toLocaleString('id-ID') %></p>
+
+  <div class="content-block"><%- page.content %></div>
+</article>
+
+<section class="discussion" id="diskusi">
+  <div class="discussion-head">
+    <h2>Diskusi</h2>
+    <span class="badge"><%= comments ? comments.length : 0 %> komentar</span>
+  </div>
+
+  <% if (oauthUser) { %>
+    <form action="/p/<%= page.slug %>/comments" method="POST" class="form-stack">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <label>
+        Tulis komentar
+        <textarea name="content" rows="4" maxlength="1000" required></textarea>
+      </label>
+      <button class="button" type="submit">Kirim</button>
+    </form>
+  <% } else if (oauthProviders && (oauthProviders.google || oauthProviders.github)) { %>
+    <div class="card discussion-login">
+      <p>Login untuk ikut berdiskusi:</p>
+      <div class="discussion-actions">
+        <% if (oauthProviders.google) { %>
+          <a class="button" href="/auth/google">Login Google</a>
+        <% } %>
+        <% if (oauthProviders.github) { %>
+          <a class="button secondary" href="/auth/github">Login GitHub</a>
+        <% } %>
+      </div>
+    </div>
+  <% } else { %>
+    <div class="card discussion-login">
+      <p>Login diskusi belum dikonfigurasi.</p>
+    </div>
+  <% } %>
+
+  <div class="discussion-list">
+    <% if (!comments || !comments.length) { %>
+      <p class="muted">Belum ada komentar. Jadilah yang pertama.</p>
+    <% } else { %>
+      <% comments.forEach((comment) => { %>
+        <article class="discussion-item">
+          <div class="discussion-avatar">
+            <% if (comment.avatar_url) { %>
+              <img src="<%= comment.avatar_url %>" alt="<%= comment.name %>" />
+            <% } else { %>
+              <span><%= comment.name ? comment.name.charAt(0).toUpperCase() : '?' %></span>
+            <% } %>
+          </div>
+          <div class="discussion-body">
+            <div class="discussion-meta">
+              <strong><%= comment.name %></strong>
+              <small><%= new Date(comment.created_at).toLocaleString('id-ID') %></small>
+              <span class="badge"><%= comment.provider %></span>
+            </div>
+            <p><%= comment.content %></p>
+            <% if (oauthUser) { %>
+              <form action="/p/<%= page.slug %>/comments/<%= comment.id %>/reply" method="POST" class="reply-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <input type="text" name="content" maxlength="1000" placeholder="Tulis balasan..." required />
+                <button class="button secondary tiny" type="submit">Balas</button>
+              </form>
+            <% } %>
+            <% const replies = repliesByParent && repliesByParent[comment.id] ? repliesByParent[comment.id] : []; %>
+            <% if (replies.length) { %>
+              <div class="reply-list">
+                <% replies.forEach((reply) => { %>
+                  <div class="reply-item">
+                    <div class="discussion-avatar">
+                      <% if (reply.avatar_url) { %>
+                        <img src="<%= reply.avatar_url %>" alt="<%= reply.name %>" />
+                      <% } else { %>
+                        <span><%= reply.name ? reply.name.charAt(0).toUpperCase() : '?' %></span>
+                      <% } %>
+                    </div>
+                    <div class="discussion-body">
+                      <div class="discussion-meta">
+                        <strong><%= reply.name %></strong>
+                        <small><%= new Date(reply.created_at).toLocaleString('id-ID') %></small>
+                        <span class="badge"><%= reply.provider %></span>
+                      </div>
+                      <p><%= reply.content %></p>
+                    </div>
+                    <% if (currentUser && currentUser.role === 'admin') { %>
+                      <form action="/admin/comments/<%= reply.id %>/delete" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                        <button class="button danger tiny" type="submit">Hapus</button>
+                      </form>
+                    <% } %>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+          </div>
+          <% if (currentUser && currentUser.role === 'admin') { %>
+            <form action="/admin/comments/<%= comment.id %>/delete" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button class="button danger tiny" type="submit">Hapus</button>
+            </form>
+          <% } %>
+        </article>
+      <% }) %>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

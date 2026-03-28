@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= pageTitle %> - <%= siteTitle %></title>
+  <meta name="description" content="<%= pageDescription %>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="/" class="brand"><%= siteTitle %></a>
+
+      <% const isPublicHome = requestPath === '/'; %>
+      <% const isPublicPage = requestPath && requestPath.startsWith('/p/'); %>
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a href="/" class="nav-chip <%= isPublicHome ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 11.5 12 4l9 7.5"></path>
+            <path d="M5.5 10.5V20h13V10.5"></path>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="/#pages" class="nav-chip">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 5.5h14"></path>
+            <path d="M5 12h14"></path>
+            <path d="M5 18.5h9"></path>
+          </svg>
+          <span>Halaman</span>
+        </a>
+        <a href="<%= isPublicPage ? '#diskusi' : '/#pages' %>" class="nav-chip <%= isPublicPage ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7A2.5 2.5 0 0 1 17.5 16H10l-4.5 4v-4H6.5A2.5 2.5 0 0 1 4 13.5z"></path>
+          </svg>
+          <span>Diskusi</span>
+        </a>
+        <% if (currentUser) { %>
+          <a href="/admin/dashboard" class="nav-chip <%= requestPath === '/admin/dashboard' ? 'active' : '' %>">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="7" height="7" rx="1.5"></rect>
+              <rect x="13" y="4" width="7" height="4" rx="1.5"></rect>
+              <rect x="13" y="10" width="7" height="10" rx="1.5"></rect>
+              <rect x="4" y="13" width="7" height="7" rx="1.5"></rect>
+            </svg>
+            <span>Admin</span>
+          </a>
+          <a href="/admin/media" class="nav-chip <%= requestPath && requestPath.startsWith('/admin/media') ? 'active' : '' %>">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+              <circle cx="9" cy="10" r="1.5"></circle>
+              <path d="m8 16 3.5-3.5L15 16l2-2 3 2"></path>
+            </svg>
+            <span>Media</span>
+          </a>
+          <% if (currentUser.role === 'admin') { %>
+            <a href="/admin/settings" class="nav-chip <%= requestPath && requestPath.startsWith('/admin/settings') ? 'active' : '' %>">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V20a2 2 0 0 1-4 0v-.2a1 1 0 0 0-.6-.9 1 1 0 0 0-1.1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H4a2 2 0 0 1 0-4h.2a1 1 0 0 0 .9-.6 1 1 0 0 0-.2-1.1l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V4a2 2 0 0 1 4 0v.2a1 1 0 0 0 .6.9 1 1 0 0 0 1.1-.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6h.2a2 2 0 0 1 0 4h-.2a1 1 0 0 0-.9.6z"></path>
+              </svg>
+              <span>Setting</span>
+            </a>
+          <% } %>
+          <form action="/admin/logout" method="POST" class="inline-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button class="link-button nav-chip" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 17.5 20 12l-5-5.5"></path>
+                <path d="M20 12H9"></path>
+                <path d="M11 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5"></path>
+              </svg>
+              <span>Logout</span>
+            </button>
+          </form>
+        <% } else { %>
+          <a href="/admin/login" class="nav-chip <%= requestPath === '/admin/login' ? 'active' : '' %>">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 17.5 20 12l-5-5.5"></path>
+              <path d="M20 12H9"></path>
+              <path d="M11 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h5"></path>
+            </svg>
+            <span>Login</span>
+          </a>
+        <% } %>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme"></button>
+      </nav>
+    </div>
+  </header>
+
+  <% const isAdminArea = currentUser && requestPath && requestPath.startsWith('/admin'); %>
+  <% if (isAdminArea) { %>
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="sidebar-head">
+          <p class="sidebar-title">Admin Panel</p>
+          <p class="sidebar-user"><%= currentUser.name %> • <%= currentUser.role %></p>
+        </div>
+        <nav class="sidebar-links">
+          <a href="/admin/dashboard" class="<%= requestPath === '/admin/dashboard' ? 'active' : '' %>">Dashboard</a>
+          <a href="/admin/pages" class="<%= requestPath.startsWith('/admin/pages') ? 'active' : '' %>">Halaman</a>
+          <a href="/admin/media" class="<%= requestPath.startsWith('/admin/media') ? 'active' : '' %>">Media</a>
+          <% if (currentUser.role === 'admin') { %>
+            <a href="/admin/users" class="<%= requestPath.startsWith('/admin/users') ? 'active' : '' %>">Users</a>
+            <a href="/admin/audit" class="<%= requestPath.startsWith('/admin/audit') ? 'active' : '' %>">Audit Log</a>
+            <a href="/admin/settings" class="<%= requestPath.startsWith('/admin/settings') ? 'active' : '' %>">Pengaturan</a>
+          <% } %>
+        </nav>
+      </aside>
+      <main class="admin-main">
+  <% } else { %>
+      <main class="container">
+  <% } %>
+    <% if (flash) { %>
+      <div class="flash flash-<%= flash.type %>"><%= flash.message %></div>
+    <% } %>

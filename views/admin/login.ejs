@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<section class="auth-card">
+  <h1>Login Admin</h1>
+  <p class="muted">Masuk untuk mengelola user dan halaman web.</p>
+
+  <form method="POST" action="/admin/login" class="form-stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <label>
+      Email
+      <input type="email" name="email" placeholder="admin@local.test" required />
+    </label>
+
+    <label>
+      Password
+      <div class="password-field">
+        <input type="password" name="password" placeholder="••••••••" required />
+        <button type="button" class="password-toggle" aria-label="Tampilkan password">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
+            <circle cx="12" cy="12" r="3.5"></circle>
+          </svg>
+        </button>
+      </div>
+    </label>
+
+    <button type="submit" class="button">Masuk</button>
+  </form>
+
+</section>
+
+<%- include('../partials/footer') %>
+
+<script>
+  (function () {
+    const toggle = document.querySelector('.password-toggle');
+    const input = document.querySelector('input[name="password"]');
+    if (!toggle || !input) return;
+    toggle.addEventListener('click', () => {
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      toggle.setAttribute('aria-label', isHidden ? 'Sembunyikan password' : 'Tampilkan password');
+    });
+  })();
+</script>

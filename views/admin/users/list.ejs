@@ -1,0 +1,45 @@
+<%- include('../../partials/header') %>
+
+<section class="page-head">
+  <h1>Kelola User</h1>
+  <a href="/admin/users/new" class="button">+ Tambah User</a>
+</section>
+
+<% if (!users.length) { %>
+  <p>Belum ada user.</p>
+<% } else { %>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Dibuat</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach((user) => { %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><span class="badge"><%= user.role %></span></td>
+            <td><%= new Date(user.created_at).toLocaleString('id-ID') %></td>
+            <td class="actions">
+              <a href="/admin/users/<%= user.id %>/edit" class="button secondary tiny">Edit</a>
+              <% if (currentUser.id !== user.id) { %>
+                <form action="/admin/users/<%= user.id %>/delete" method="POST" onsubmit="return confirm('Hapus user ini?')">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <button type="submit" class="button danger tiny">Hapus</button>
+                </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../../partials/footer') %>

@@ -1,0 +1,93 @@
+<%- include('../partials/header') %>
+
+<section class="page-head">
+  <h1>Pengaturan</h1>
+</section>
+
+<section class="form-card">
+  <form action="/admin/settings" method="POST" class="form-stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+    <label>
+      Judul Website
+      <input type="text" name="site_title" value="<%= settings.site_title || '' %>" required />
+    </label>
+
+    <label>
+      Tagline
+      <input type="text" name="site_tagline" value="<%= settings.site_tagline || '' %>" />
+    </label>
+
+    <label>
+      Deskripsi Website
+      <textarea name="site_description" rows="3"><%= settings.site_description || '' %></textarea>
+    </label>
+
+    <label>
+      Judul Homepage
+      <input type="text" name="homepage_title" value="<%= settings.homepage_title || '' %>" />
+    </label>
+
+    <label>
+      Subjudul Homepage
+      <textarea name="homepage_subtitle" rows="3"><%= settings.homepage_subtitle || '' %></textarea>
+    </label>
+
+    <label>
+      Teks Footer
+      <input type="text" name="footer_text" value="<%= settings.footer_text || '' %>" />
+    </label>
+
+    <label>
+      Avatar Landing Page
+      <input type="text" name="landing_avatar_url" value="<%= settings.landing_avatar_url || '' %>" placeholder="/media/contoh.webp atau https://..." />
+    </label>
+
+    <label>
+      URL GitHub
+      <input type="url" name="social_github" value="<%= settings.social_github || '' %>" placeholder="https://github.com/username" />
+    </label>
+
+    <label>
+      URL LinkedIn
+      <input type="url" name="social_linkedin" value="<%= settings.social_linkedin || '' %>" placeholder="https://linkedin.com/in/username" />
+    </label>
+
+    <label>
+      URL Facebook
+      <input type="url" name="social_facebook" value="<%= settings.social_facebook || '' %>" placeholder="https://facebook.com/username" />
+    </label>
+
+    <label>
+      URL Twitter/X
+      <input type="url" name="social_twitter" value="<%= settings.social_twitter || '' %>" placeholder="https://x.com/username" />
+    </label>
+
+    <label>
+      URL Instagram
+      <input type="url" name="social_instagram" value="<%= settings.social_instagram || '' %>" placeholder="https://instagram.com/username" />
+    </label>
+
+    <label>
+      URL YouTube
+      <input type="url" name="social_youtube" value="<%= settings.social_youtube || '' %>" placeholder="https://youtube.com/@channel" />
+    </label>
+
+    <label>
+      URL Telegram
+      <input type="url" name="social_telegram" value="<%= settings.social_telegram || '' %>" placeholder="https://t.me/username" />
+    </label>
+
+    <label>
+      Email Publik
+      <input type="email" name="social_email" value="<%= settings.social_email || '' %>" placeholder="nama@domain.com" />
+    </label>
+
+    <div class="form-actions">
+      <button class="button" type="submit">Simpan</button>
+      <a href="/admin/dashboard" class="button secondary">Kembali</a>
+    </div>
+  </form>
+</section>
+
+<%- include('../partials/footer') %>

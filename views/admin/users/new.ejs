@@ -1,0 +1,38 @@
+<%- include('../../partials/header') %>
+
+<section class="form-card">
+  <h1>Tambah User</h1>
+
+  <form action="/admin/users" method="POST" class="form-stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <label>
+      Nama
+      <input type="text" name="name" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" required />
+    </label>
+
+    <label>
+      Password
+      <input type="password" name="password" required />
+    </label>
+
+    <label>
+      Role
+      <select name="role">
+        <option value="editor">Editor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label>
+
+    <div class="form-actions">
+      <button class="button" type="submit">Simpan</button>
+      <a href="/admin/users" class="button secondary">Batal</a>
+    </div>
+  </form>
+</section>
+
+<%- include('../../partials/footer') %>

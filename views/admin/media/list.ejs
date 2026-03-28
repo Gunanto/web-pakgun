@@ -1,0 +1,36 @@
+<%- include('../../partials/header') %>
+
+<section class="page-head">
+  <h1>Media Library</h1>
+</section>
+
+<section class="card media-card">
+  <form action="/admin/media/upload" method="POST" enctype="multipart/form-data" class="form-stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <label>
+      Upload Gambar
+      <input type="file" name="media" accept="image/*" required />
+    </label>
+    <button class="button" type="submit">Upload</button>
+    <p class="muted small">Maksimal 5MB. Format gambar umum disarankan (PNG/JPG/WebP).</p>
+  </form>
+</section>
+
+<section class="media-grid">
+  <% if (!media.length) { %>
+    <p>Belum ada media yang diupload.</p>
+  <% } else { %>
+    <% media.forEach((item) => { %>
+      <article class="media-item">
+        <img src="/media/<%= item.filename %>" alt="<%= item.original_name %>" loading="lazy" />
+        <div class="media-meta">
+          <strong><%= item.original_name %></strong>
+          <small>By <%= item.uploader_name %> • <%= new Date(item.created_at).toLocaleString('id-ID') %></small>
+          <input type="text" value="/media/<%= item.filename %>" readonly />
+        </div>
+      </article>
+    <% }) %>
+  <% } %>
+</section>
+
+<%- include('../../partials/footer') %>

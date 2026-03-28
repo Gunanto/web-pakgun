@@ -1,0 +1,59 @@
+  </main>
+  <% if (currentUser && requestPath && requestPath.startsWith('/admin')) { %>
+    </div>
+  <% } %>
+
+  <nav class="mobile-bar">
+    <a href="/" class="mobile-link">Publik</a>
+    <% if (currentUser) { %>
+      <a href="/admin/dashboard" class="mobile-link">Admin</a>
+      <a href="/admin/media" class="mobile-link">Media</a>
+      <% if (currentUser.role === 'admin') { %>
+        <a href="/admin/settings" class="mobile-link">Pengaturan</a>
+      <% } %>
+    <% } else { %>
+      <a href="/admin/login" class="mobile-link">Login</a>
+    <% } %>
+    <button class="theme-toggle" id="theme-toggle-mobile" type="button" aria-label="Toggle theme"></button>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small><%= footerText %></small>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.getElementById('theme-toggle');
+      const toggleMobile = document.getElementById('theme-toggle-mobile');
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let theme = stored || (prefersDark ? 'dark' : 'light');
+
+      const iconSun = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>';
+      const iconMoon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3a7 7 0 0 0 11.5 11.5Z"></path></svg>';
+
+      const applyTheme = (value) => {
+        theme = value;
+        root.setAttribute('data-theme', theme);
+        const icon = theme === 'dark' ? iconSun : iconMoon;
+        if (toggle) toggle.innerHTML = icon;
+        if (toggleMobile) toggleMobile.innerHTML = icon;
+      };
+
+      applyTheme(theme);
+
+      const onToggle = () => {
+        const next = theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+      };
+
+      if (toggle) toggle.addEventListener('click', onToggle);
+      if (toggleMobile) toggleMobile.addEventListener('click', onToggle);
+    })();
+  </script>
+</body>
+</html>

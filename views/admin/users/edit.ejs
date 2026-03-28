@@ -1,0 +1,38 @@
+<%- include('../../partials/header') %>
+
+<section class="form-card">
+  <h1>Edit User</h1>
+
+  <form action="/admin/users/<%= user.id %>/update" method="POST" class="form-stack">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <label>
+      Nama
+      <input type="text" name="name" value="<%= user.name %>" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" value="<%= user.email %>" required />
+    </label>
+
+    <label>
+      Password baru (opsional)
+      <input type="password" name="password" placeholder="Kosongkan jika tidak diubah" />
+    </label>
+
+    <label>
+      Role
+      <select name="role">
+        <option value="editor" <%= user.role === 'editor' ? 'selected' : '' %>>Editor</option>
+        <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+      </select>
+    </label>
+
+    <div class="form-actions">
+      <button class="button" type="submit">Update</button>
+      <a href="/admin/users" class="button secondary">Batal</a>
+    </div>
+  </form>
+</section>
+
+<%- include('../../partials/footer') %>
