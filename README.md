@@ -64,6 +64,12 @@ Juga ada tag tambahan berbasis branch, tag git, dan SHA commit.
 
 Jika package image masih private, pastikan akses pull di server tujuan sudah sesuai, atau ubah visibility package di GitHub menjadi public bila memang diinginkan.
 
+Untuk deploy ke VPS memakai image GHCR, lihat:
+
+```text
+docs/deploy-ghcr.md
+```
+
 ### Opsi Lokal
 
 ```bash
@@ -97,6 +103,8 @@ Setelah login pertama:
 ## Struktur Folder
 
 ```text
+docs/
+  deploy-ghcr.md
 src/
   app.js
   db.js

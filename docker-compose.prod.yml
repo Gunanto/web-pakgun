@@ -1,0 +1,15 @@
+services:
+  web-pakgun:
+    image: ghcr.io/gunanto/web-pakgun:latest
+    container_name: web-pakgun
+    ports:
+      - "3010:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ENV_PATH: /app/data/.env
+      SESSION_COOKIE_SECURE: "true"
+      OAUTH_BASE_URL: https://example.com
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
