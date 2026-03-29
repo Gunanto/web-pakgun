@@ -950,6 +950,11 @@ textarea {
     color: var(--text);
 }
 
+.ql-snow .ql-picker-label::before,
+.ql-snow .ql-picker-item::before {
+    color: var(--text);
+}
+
 .ql-snow .ql-picker-options {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -985,6 +990,13 @@ textarea {
 [data-theme="dark"] .ql-snow button.ql-active,
 [data-theme="dark"] .ql-snow .ql-picker-label.ql-active,
 [data-theme="dark"] .ql-snow .ql-picker-item.ql-selected {
+    color: var(--primary);
+}
+
+[data-theme="dark"] .ql-snow .ql-picker-label:hover::before,
+[data-theme="dark"] .ql-snow .ql-picker-item:hover::before,
+[data-theme="dark"] .ql-snow .ql-picker-label.ql-active::before,
+[data-theme="dark"] .ql-snow .ql-picker-item.ql-selected::before {
     color: var(--primary);
 }
 
