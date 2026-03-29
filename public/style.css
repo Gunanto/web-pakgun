@@ -581,7 +581,7 @@ main.container {
 }
 
 .content-block {
-    line-height: 1.15;
+    line-height: 1.42;
     font-size: 16px;
 }
 
@@ -590,21 +590,21 @@ main.container {
 .content-block ul,
 .content-block blockquote,
 .content-block pre {
-    margin: 0 0 0.08em !important;
-    margin-block: 0 0.08em !important;
+    margin: 0 0 0.85em !important;
+    margin-block: 0 0.85em !important;
 }
 
 .content-block li {
-    margin: 0 !important;
-    margin-block: 0 !important;
-    line-height: 1.15;
+    margin: 0 0 0.2em !important;
+    margin-block: 0 0.2em !important;
+    line-height: 1.42;
 }
 
 .content-block ol,
 .content-block ul {
-    margin: 0 0 0.1em !important;
-    margin-block: 0 0.1em !important;
-    padding-left: 1.25em;
+    margin: 0 0 0.85em !important;
+    margin-block: 0 0.85em !important;
+    padding-left: 1.5em;
 }
 
 .content-block h1,
@@ -613,9 +613,9 @@ main.container {
 .content-block h4,
 .content-block h5,
 .content-block h6 {
-    margin: 0.25em 0 0.05em !important;
-    margin-block: 0.25em 0.05em !important;
-    line-height: 1.1;
+    margin: 1.1em 0 0.5em !important;
+    margin-block: 1.1em 0.5em !important;
+    line-height: 1.3;
 }
 
 .content-block > :first-child {
@@ -632,10 +632,6 @@ main.container {
 .content-block ol + p,
 .content-block ul + p {
     margin-top: 0 !important;
-}
-
-.content-block br + br {
-    display: none;
 }
 
 .page-card-meta {
