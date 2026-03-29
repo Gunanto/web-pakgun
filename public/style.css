@@ -581,7 +581,7 @@ main.container {
 }
 
 .content-block {
-    line-height: 1.45;
+    line-height: 1.2;
     font-size: 16px;
 }
 
@@ -590,11 +590,11 @@ main.container {
 .content-block ul,
 .content-block blockquote,
 .content-block pre {
-    margin: 0 0 0.75em;
+    margin: 0 0 0.35em;
 }
 
 .content-block li {
-    margin: 0 0 0.25em;
+    margin: 0 0 0.1em;
 }
 
 .content-block ol,
@@ -608,7 +608,7 @@ main.container {
 .content-block h4,
 .content-block h5,
 .content-block h6 {
-    margin: 1em 0 0.45em;
+    margin: 0.7em 0 0.3em;
     line-height: 1.25;
 }
 
@@ -688,6 +688,15 @@ thead th {
 label {
     display: grid;
     gap: 8px;
+    font-weight: 600;
+}
+
+.form-field {
+    display: grid;
+    gap: 8px;
+}
+
+.field-label {
     font-weight: 600;
 }
 
