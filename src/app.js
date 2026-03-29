@@ -294,7 +294,10 @@ function sanitizeContent(content = "") {
   });
 
   return clean
-    .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, "")
+    .replace(
+      /<p\b[^>]*>(?:\s|&nbsp;|&#65279;|&#8203;|<br\s*\/?>|<(?:span|strong|em|u|s)\b[^>]*>\s*<\/(?:span|strong|em|u|s)>)*<\/p>/gi,
+      "",
+    )
     .replace(/(?:<br\s*\/?>\s*){3,}/gi, "<br><br>")
     .trim();
 }
