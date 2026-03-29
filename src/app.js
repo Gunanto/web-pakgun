@@ -49,6 +49,10 @@ const { csrfSynchronisedProtection, generateToken } = csrfSync({
 });
 const uploadDir = path.join(__dirname, "..", "data", "uploads");
 const staticHeroDir = path.join(__dirname, "..", "public", "hero-backgrounds");
+const defaultLandingAvatarPath = "/static/hero-backgrounds/me.jpeg";
+const hasDefaultLandingAvatar = fs.existsSync(
+  path.join(staticHeroDir, "me.jpeg"),
+);
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -165,7 +169,9 @@ app.use((req, res, next) => {
   res.locals.homepageSubtitle =
     settings.homepage_subtitle ||
     "Halaman di bawah ini dikelola dari panel admin.";
-  res.locals.landingAvatarUrl = settings.landing_avatar_url || "";
+  res.locals.landingAvatarUrl =
+    settings.landing_avatar_url ||
+    (hasDefaultLandingAvatar ? defaultLandingAvatarPath : "");
   res.locals.socialLinks = {
     github: settings.social_github || "",
     linkedin: settings.social_linkedin || "",
