@@ -227,7 +227,7 @@ function ensureOauthAuth(req, res, next) {
 }
 
 function sanitizeContent(content = "") {
-  return sanitizeHtml(content, {
+  const clean = sanitizeHtml(content, {
     allowedTags: [
       "h1",
       "h2",
@@ -292,6 +292,11 @@ function sanitizeContent(content = "") {
       },
     },
   });
+
+  return clean
+    .replace(/<p>(?:\s|&nbsp;|<br\s*\/?>)*<\/p>/gi, "")
+    .replace(/(?:<br\s*\/?>\s*){3,}/gi, "<br><br>")
+    .trim();
 }
 
 function sanitizeComment(content = "") {
@@ -587,6 +592,8 @@ app.get("/p/:slug", (req, res) => {
       .render("public/not-found", { pageTitle: "Halaman Tidak Ditemukan" });
   }
 
+  page.content = sanitizeContent(page.content || "");
+
   const commentsRaw = db
     .prepare(
       `SELECT c.*, u.name, u.avatar_url, u.provider
@@ -810,6 +817,8 @@ app.get("/admin/pages/:id/preview", ensureAuth, (req, res) => {
     setFlash(req, "error", "Halaman tidak ditemukan atau tidak bisa diakses.");
     return res.redirect("/admin/pages");
   }
+
+  page.content = sanitizeContent(page.content || "");
 
   res.render("public/page", {
     pageTitle: `Preview: ${page.title}`,
