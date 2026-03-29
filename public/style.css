@@ -909,7 +909,7 @@ textarea {
     background: color-mix(in srgb, var(--panel) 80%, transparent);
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
-    overflow: hidden;
+    overflow: visible;
 }
 
 .editor {
@@ -919,6 +919,8 @@ textarea {
 }
 
 .ql-toolbar.ql-snow {
+    position: relative;
+    z-index: 2;
     border: none;
     border-bottom: 1px solid var(--border);
     background: color-mix(in srgb, var(--panel) 92%, transparent);
@@ -956,6 +958,7 @@ textarea {
 }
 
 .ql-snow .ql-picker-options {
+    z-index: 5;
     background: var(--panel);
     border: 1px solid var(--border);
 }
