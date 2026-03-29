@@ -49,9 +49,9 @@ const { csrfSynchronisedProtection, generateToken } = csrfSync({
 });
 const uploadDir = path.join(__dirname, "..", "data", "uploads");
 const staticHeroDir = path.join(__dirname, "..", "public", "hero-backgrounds");
-const defaultLandingAvatarPath = "/static/hero-backgrounds/me.jpeg";
+const defaultLandingAvatarPath = "/static/avatar/me.jpeg";
 const hasDefaultLandingAvatar = fs.existsSync(
-  path.join(staticHeroDir, "me.jpeg"),
+  path.join(__dirname, "..", "public", "avatar", "me.jpeg"),
 );
 
 if (!fs.existsSync(uploadDir)) {
