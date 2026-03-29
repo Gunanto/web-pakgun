@@ -147,8 +147,8 @@
       <% pages.forEach((item) => { %>
         <article class="card page-card">
           <h3><a href="/p/<%= item.slug %>"><%= item.title %></a></h3>
-          <p>Slug: <code><%= item.slug %></code></p>
           <small>Oleh <%= item.author_name %> • update <%= new Date(item.updated_at).toLocaleString('id-ID') %></small>
+          <small>Dilihat sebanyak: <%= Number(item.view_count || 0).toLocaleString('id-ID') %> kali</small>
         </article>
       <% }) %>
     </div>

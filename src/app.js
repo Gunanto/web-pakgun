@@ -480,7 +480,7 @@ const loginLimiter = rateLimit({
 app.get("/", (req, res) => {
   const pages = db
     .prepare(
-      `SELECT p.id, p.title, p.slug, p.updated_at, u.name AS author_name
+      `SELECT p.id, p.title, p.slug, p.updated_at, p.view_count, u.name AS author_name
        FROM pages p
        JOIN users u ON u.id = p.author_id
       WHERE p.status = 'published'
@@ -592,6 +592,10 @@ app.get("/p/:slug", (req, res) => {
       .render("public/not-found", { pageTitle: "Halaman Tidak Ditemukan" });
   }
 
+  db.prepare(
+    "UPDATE pages SET view_count = COALESCE(view_count, 0) + 1 WHERE id = ?",
+  ).run(page.id);
+  page.view_count = Number(page.view_count || 0) + 1;
   page.content = sanitizeContent(page.content || "");
 
   const commentsRaw = db

@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS pages (
   slug TEXT NOT NULL UNIQUE,
   content TEXT NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('draft', 'published')) DEFAULT 'draft',
+  view_count INTEGER NOT NULL DEFAULT 0,
   author_id INTEGER NOT NULL,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
@@ -98,6 +99,16 @@ CREATE TABLE IF NOT EXISTS comments (
 CREATE INDEX IF NOT EXISTS idx_comments_page_id ON comments(page_id);
 CREATE INDEX IF NOT EXISTS idx_comments_created_at ON comments(created_at);
 `);
+
+try {
+  db.prepare(
+    "ALTER TABLE pages ADD COLUMN view_count INTEGER NOT NULL DEFAULT 0",
+  ).run();
+} catch (error) {
+  if (!String(error.message).includes("duplicate column name")) {
+    throw error;
+  }
+}
 
 try {
   db.prepare("ALTER TABLE comments ADD COLUMN parent_id INTEGER").run();
