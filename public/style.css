@@ -581,9 +581,43 @@ main.container {
 }
 
 .content-block {
-    white-space: pre-wrap;
-    line-height: 1.8;
+    line-height: 1.45;
     font-size: 16px;
+}
+
+.content-block p,
+.content-block ol,
+.content-block ul,
+.content-block blockquote,
+.content-block pre {
+    margin: 0 0 0.75em;
+}
+
+.content-block li {
+    margin: 0 0 0.25em;
+}
+
+.content-block ol,
+.content-block ul {
+    padding-left: 1.4em;
+}
+
+.content-block h1,
+.content-block h2,
+.content-block h3,
+.content-block h4,
+.content-block h5,
+.content-block h6 {
+    margin: 1em 0 0.45em;
+    line-height: 1.25;
+}
+
+.content-block > :first-child {
+    margin-top: 0;
+}
+
+.content-block > :last-child {
+    margin-bottom: 0;
 }
 
 .content-block .ql-size-small {
