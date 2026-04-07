@@ -4,17 +4,38 @@
   <h1>Login Admin</h1>
   <p class="muted">Masuk untuk mengelola user dan halaman web.</p>
 
-  <form method="POST" action="/admin/login" class="form-stack">
+  <form method="POST" action="/admin/login" class="form-stack" autocomplete="on" id="admin-login-form">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
     <label>
       Email
-      <input type="email" name="email" placeholder="admin@local.test" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="admin@local.test"
+        autocomplete="username email"
+        autocapitalize="none"
+        autocorrect="off"
+        spellcheck="false"
+        inputmode="email"
+        required
+      />
     </label>
 
     <label>
       Password
       <div class="password-field">
-        <input type="password" name="password" placeholder="••••••••" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          autocapitalize="none"
+          autocorrect="off"
+          spellcheck="false"
+          required
+        />
         <button type="button" class="password-toggle" aria-label="Tampilkan password">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
