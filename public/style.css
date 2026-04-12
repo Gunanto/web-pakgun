@@ -581,7 +581,7 @@ main.container {
 }
 
 .content-block {
-    line-height: 1.42;
+    line-height: 1.65;
     font-size: 16px;
 }
 
@@ -590,20 +590,20 @@ main.container {
 .content-block ul,
 .content-block blockquote,
 .content-block pre {
-    margin: 0 0 0.85em !important;
-    margin-block: 0 0.85em !important;
+    margin: 0 0 0.6em !important;
+    margin-block: 0 0.6em !important;
 }
 
 .content-block li {
-    margin: 0 0 0.2em !important;
-    margin-block: 0 0.2em !important;
-    line-height: 1.42;
+    margin: 0 0 0.15em !important;
+    margin-block: 0 0.15em !important;
+    line-height: 1.6;
 }
 
 .content-block ol,
 .content-block ul {
-    margin: 0 0 0.85em !important;
-    margin-block: 0 0.85em !important;
+    margin: 0 0 0.6em !important;
+    margin-block: 0 0.6em !important;
     padding-left: 1.5em;
 }
 
